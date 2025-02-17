@@ -239,7 +239,7 @@ class AuthController {
                     if (!$result || !$result['success']) {
                         Log::warning("$captchaType verify failed.", [
                             'UA' => $request->userAgent(),
-                            'IP' => $result->ip()
+                            'IP' => $request->ip()
                         ]);
 
                         Log::warning("$captchaType verify result.", $result);
