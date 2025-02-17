@@ -12,6 +12,7 @@ namespace MaxSky\Captcha;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use MaxSky\Captcha\Exceptions\CaptchaRequestException;
+use MaxSky\Captcha\Exceptions\CaptchaResponseException;
 
 abstract class AbstractCaptchaService {
 
@@ -49,6 +50,7 @@ abstract class AbstractCaptchaService {
      *
      * @return array
      * @throws CaptchaRequestException
+     * @throws CaptchaResponseException
      */
     protected function request(string $url, array $data): array {
         $data = array_merge($this->options, $data);
@@ -59,6 +61,14 @@ abstract class AbstractCaptchaService {
             throw new CaptchaRequestException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return json_decode($response, true);
+        $decoded = json_decode($response, true);
+
+        if ($decoded && json_last_error() === JSON_ERROR_NONE) {
+            return $decoded;
+        }
+
+        throw new CaptchaResponseException(
+            'Captcha response error. Response contents: ' . $response->getContents()
+        );
     }
 }

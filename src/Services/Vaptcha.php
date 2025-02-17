@@ -11,12 +11,14 @@ namespace MaxSky\Captcha\Services;
 
 use MaxSky\Captcha\AbstractCaptchaService;
 use MaxSky\Captcha\Exceptions\CaptchaRequestException;
+use MaxSky\Captcha\Exceptions\CaptchaResponseException;
 
 class Vaptcha extends AbstractCaptchaService {
 
     /**
      * @return array
      * @throws CaptchaRequestException
+     * @throws CaptchaResponseException
      */
     public function verify(): array {
         $server = $this->params['server'];

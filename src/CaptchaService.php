@@ -17,8 +17,8 @@ use MaxSky\Captcha\Services\Vaptcha;
 class CaptchaService {
 
     private static $instance = null;
-    private $params = [];
-    private $requestOptions = [];
+    private $params;
+    private $requestOptions;
 
     public function __construct(array $params, array $options = []) {
         $this->params = $params;
@@ -45,7 +45,7 @@ class CaptchaService {
      *
      * @return AbstractCaptchaService
      */
-    public function hCaptcha(string $response, ?string $client_ip = null): AbstractCaptchaService {
+    public function hcaptcha(string $response, ?string $client_ip = null): AbstractCaptchaService {
         return new HCaptcha($this->params, $response, $client_ip, $this->requestOptions);
     }
 
@@ -70,15 +70,12 @@ class CaptchaService {
     }
 
     /**
-     * @param string $server
      * @param string $response
-     * @param string $client_ip
+     * @param string $client_ip Required
      *
      * @return AbstractCaptchaService
      */
-    public function vaptcha(string $server, string $response, string $client_ip): AbstractCaptchaService {
-        return new Vaptcha(
-            array_merge($this->params, ['server' => $server]), $response, $client_ip, $this->requestOptions
-        );
+    public function vaptcha(string $response, string $client_ip): AbstractCaptchaService {
+        return new Vaptcha($this->params, $response, $client_ip, $this->requestOptions);
     }
 }

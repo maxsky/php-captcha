@@ -7,7 +7,7 @@
             "MaxSky\\Captcha\\": "src/"
         },
         "files": [
-            "src/Constants/API.php"
+            "src/Constants/CaptchaApi.php"
         ]
     },
     "authors": [
